@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akriti Agrawal — Software Engineer II</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #F7F8FA;
+            --surface: #FFFFFF;
+            --text: #1B1F3B;
+            --text-secondary: #6B7194;
+            --text-muted: #9CA3BF;
+            --accent: #6366F1;
+            --accent-light: #EEF0FF;
+            --green: #22C55E;
+            --green-light: #ECFDF5;
+            --orange: #F59E0B;
+            --rose: #F43F5E;
+            --border: #E8EAF0;
+            --border-strong: #D1D5E0;
+            --radius: 16px;
+            --shadow-sm: 0 1px 3px rgba(27,31,59,0.04);
+            --shadow-md: 0 4px 20px rgba(27,31,59,0.06);
+            --shadow-lg: 0 12px 40px rgba(27,31,59,0.08);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        /* ── NAV ── */
+        .topbar {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            background: rgba(247,248,250,0.88);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        .topbar-inner {
+            max-width: 1200px; margin: 0 auto;
+            padding: 0 2.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+            height: 60px;
+        }
+        .topbar-name {
+            font-family: 'Sora', sans-serif;
+            font-weight: 700; font-size: 1rem;
+            color: var(--text);
+        }
+        .topbar-links { display: flex; gap: 0.25rem; list-style: none; }
+        .topbar-links a {
+            padding: 0.4rem 0.9rem; border-radius: 8px;
+            font-size: 0.85rem; font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+        .topbar-links a:hover {
+            background: var(--surface); color: var(--text);
+            box-shadow: var(--shadow-sm);
+        }
+        .topbar-status {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-size: 0.8rem; font-weight: 500; color: var(--green);
+        }
+        .pulse {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 0 0 rgba(34,197,94,0.4);
+            animation: pulse-ring 2s ease-out infinite;
+        }
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(34,197,94,0); }
+            100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+        }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center;
+            padding: 7rem 2.5rem 4rem;
+        }
+        .hero-inner {
+            max-width: 1200px; margin: 0 auto; width: 100%;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 4rem; align-items: center;
+        }
+
+        .hero-left {}
+        .hero-greeting {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem; color: var(--accent);
+            font-weight: 500; margin-bottom: 1.25rem;
+            letter-spacing: 0.02em;
+        }
+        .hero h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(2.4rem, 5vw, 3.6rem);
+            font-weight: 800; line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+        }
+        .hero h1 em {
+            font-style: normal;
+            background: linear-gradient(135deg, var(--accent), #A78BFA);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-bio {
+            font-size: 1.1rem; color: var(--text-secondary);
+            max-width: 480px; line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        .hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.75rem 1.6rem; border-radius: 10px;
+            font-size: 0.9rem; font-weight: 600; border: none;
+            cursor: pointer; transition: all 0.25s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .btn-fill {
+            background: var(--accent); color: #fff;
+            box-shadow: 0 2px 12px rgba(99,102,241,0.3);
+        }
+        .btn-fill:hover { background: #4F46E5; transform: translateY(-1px); }
+        .btn-ghost {
+            background: var(--surface); color: var(--text);
+            border: 1.5px solid var(--border);
+        }
+        .btn-ghost:hover { border-color: var(--border-strong); box-shadow: var(--shadow-sm); }
+
+        /* ── STATUS CARD (signature element) ── */
+        .status-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+        .status-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg);
+        }
+        .status-header-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem; font-weight: 500;
+            color: var(--text-muted); text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .status-badge {
+            display: flex; align-items: center; gap: 0.4rem;
+            font-size: 0.75rem; font-weight: 600; color: var(--green);
+            background: var(--green-light);
+            padding: 0.25rem 0.7rem; border-radius: 20px;
+        }
+        .status-badge .dot {
+            width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+        }
+        .status-body { padding: 1.5rem; }
+        .status-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.7rem 0;
+        }
+        .status-row:not(:last-child) { border-bottom: 1px solid var(--border); }
+        .status-label {
+            font-size: 0.82rem; color: var(--text-muted); font-weight: 500;
+        }
+        .status-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem; font-weight: 500; color: var(--text);
+        }
+        .status-tech-row {
+            display: flex; flex-wrap: wrap; gap: 0.4rem;
+            margin-top: 1rem;
+        }
+        .mini-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem; padding: 0.25rem 0.55rem;
+            border-radius: 6px; font-weight: 500;
+        }
+        .mini-tag.indigo { background: var(--accent-light); color: var(--accent); }
+        .mini-tag.green { background: var(--green-light); color: #16A34A; }
+        .mini-tag.amber { background: #FFFBEB; color: #D97706; }
+        .mini-tag.rose { background: #FFF1F2; color: #E11D48; }
+
+        /* ── SECTION SYSTEM ── */
+        section { padding: 6rem 2.5rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .section-eyebrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem; font-weight: 500;
+            color: var(--accent); text-transform: uppercase;
+            letter-spacing: 0.12em; margin-bottom: 0.6rem;
+        }
+        .section-heading {
+            font-family: 'Sora', sans-serif;
+            font-size: 2rem; font-weight: 700;
+            letter-spacing: -0.02em; margin-bottom: 0.6rem;
+        }
+        .section-sub {
+            color: var(--text-secondary); font-size: 1rem;
+            margin-bottom: 3rem; max-width: 520px;
+        }
+
+        /* ── PROJECTS ── */
+        .project-list { display: flex; flex-direction: column; gap: 1.5rem; }
+        .project {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            display: grid;
+            grid-template-columns: 5px 1fr;
+            overflow: hidden;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+        .project:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+        .project-stripe { border-radius: 4px 0 0 4px; }
+        .project-content {
+            padding: 2rem 2.5rem;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 2rem; align-items: start;
+        }
+        .project-meta { }
+        .project-name {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.25rem; font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .project-desc {
+            font-size: 0.92rem; color: var(--text-secondary);
+            line-height: 1.7; margin-bottom: 1.2rem;
+            max-width: 520px;
+        }
+        .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .ptag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem; padding: 0.3rem 0.65rem;
+            border-radius: 6px; font-weight: 500;
+            background: var(--bg); color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+        .project-links-col {
+            display: flex; flex-direction: column; gap: 0.5rem;
+            padding-top: 0.25rem;
+        }
+        .project-link {
+            font-size: 0.82rem; font-weight: 600;
+            color: var(--accent);
+            display: flex; align-items: center; gap: 0.3rem;
+            transition: gap 0.2s;
+        }
+        .project-link:hover { gap: 0.5rem; }
+
+        /* ── BENTO SKILLS ── */
+        .bento {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto auto;
+            gap: 1rem;
+        }
+        .bento-cell {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.75rem;
+            transition: box-shadow 0.25s;
+        }
+        .bento-cell:hover { box-shadow: var(--shadow-md); }
+        .bento-cell.wide { grid-column: span 2; }
+        .bento-icon {
+            width: 42px; height: 42px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; margin-bottom: 1rem;
+        }
+        .bento-title {
+            font-family: 'Sora', sans-serif;
+            font-size: 0.95rem; font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+        .bento-items { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .bento-tag {
+            font-size: 0.8rem; padding: 0.3rem 0.7rem;
+            border-radius: 6px; background: var(--bg);
+            color: var(--text-secondary); font-weight: 500;
+        }
+
+        /* ── EXPERIENCE ── */
+        .exp-grid { display: flex; flex-direction: column; gap: 0; }
+        .exp-item {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            gap: 2.5rem;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .exp-item:first-child { padding-top: 0; }
+        .exp-item:last-child { border-bottom: none; }
+        .exp-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem; color: var(--text-muted);
+            font-weight: 500; padding-top: 0.2rem;
+        }
+        .exp-role {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.1rem; font-weight: 600;
+            margin-bottom: 0.15rem;
+        }
+        .exp-company {
+            font-size: 0.9rem; color: var(--accent);
+            font-weight: 500; margin-bottom: 0.75rem;
+        }
+        .exp-desc {
+            font-size: 0.88rem; color: var(--text-secondary);
+            line-height: 1.75; max-width: 540px;
+        }
+
+        /* ── ABOUT ── */
+        .about-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .about-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem; align-items: start;
+        }
+        .about-prose p {
+            font-size: 1rem; color: var(--text-secondary);
+            line-height: 1.85; margin-bottom: 1.25rem;
+        }
+        .about-facts {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .fact-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+        .fact-label {
+            font-size: 0.72rem; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 0.08em;
+            font-weight: 500; margin-bottom: 0.35rem;
+        }
+        .fact-value {
+            font-family: 'Sora', sans-serif;
+            font-size: 0.95rem; font-weight: 600;
+        }
+
+        /* ── CONTACT ── */
+        .contact-row {
+            display: flex; gap: 1rem; flex-wrap: wrap;
+        }
+        .contact-pill {
+            display: flex; align-items: center; gap: 0.75rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.1rem 1.75rem;
+            transition: all 0.25s;
+            flex: 1; min-width: 220px;
+        }
+        .contact-pill:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-light);
+            transform: translateY(-2px);
+        }
+        .contact-pill-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem;
+            background: var(--accent-light); color: var(--accent);
+        }
+        .contact-pill-label {
+            font-size: 0.72rem; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 0.06em;
+            font-weight: 500;
+        }
+        .contact-pill-value {
+            font-size: 0.9rem; font-weight: 600; margin-top: 0.1rem;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 2.5rem 2.5rem;
+            text-align: center;
+            font-size: 0.8rem; color: var(--text-muted);
+        }
+
+        /* ── MOBILE ── */
+        @media (max-width: 900px) {
+            .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+            .bento { grid-template-columns: 1fr 1fr; }
+            .bento-cell.wide { grid-column: span 2; }
+            .project-content { grid-template-columns: 1fr; gap: 1rem; }
+            .project-links-col { flex-direction: row; }
+            .about-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+            .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+        }
+        @media (max-width: 600px) {
+            section { padding: 4rem 1.25rem; }
+            .hero { padding: 5.5rem 1.25rem 3rem; }
+            .topbar-links { display: none; }
+            .bento { grid-template-columns: 1fr; }
+            .bento-cell.wide { grid-column: span 1; }
+            .about-facts { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="topbar-name">akriti_agrawal</div>
+        <ul class="topbar-links">
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="topbar-status">
+            <span class="pulse"></span>
+            Open to work
+        </div>
+    </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-left">
+            <div class="hero-greeting">This is my website</div>
+            <h1>
+                I craft apps<br>
+                and the <em>infra<br>beneath them.</em>
+            </h1>
+            <p class="hero-bio">
+                Full Stack Developer and DevOps Engineer who builds end-to-end —
+                from the UI your users see to the pipelines and clusters that
+                keep it all running at scale.
+            </p>
+            <div class="hero-actions">
+                <a href="#projects" class="btn btn-fill">See my work ↓</a>
+                <a href="#contact" class="btn btn-ghost">Say hello</a>
+            </div>
+        </div>
+
+        <!-- STATUS CARD — the signature element -->
+        <div class="status-card">
+            <div class="status-header">
+                <span class="status-header-title">System Status</span>
+                <span class="status-badge"><span class="dot"></span> All Operational</span>
+            </div>
+            <div class="status-body">
+                <div class="status-row">
+                    <span class="status-label">Role</span>
+                    <span class="status-value">Full Stack + DevOps</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-label">Experience</span>
+                    <span class="status-value">5+ years</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-label">Location</span>
+                    <span class="status-value">India 🇮🇳</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-label">Availability</span>
+                    <span class="status-value" style="color: var(--green);">Open to offers</span>
+                </div>
+                <div class="status-row" style="border-bottom: none;">
+                    <span class="status-label">Current Stack</span>
+                </div>
+                <div class="status-tech-row">
+                    <span class="mini-tag indigo">React</span>
+                    <span class="mini-tag indigo">Node.js</span>
+                    <span class="mini-tag green">Docker</span>
+                    <span class="mini-tag green">K8s</span>
+                    <span class="mini-tag amber">AWS</span>
+                    <span class="mini-tag amber">Terraform</span>
+                    <span class="mini-tag rose">Python</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+    <div class="container">
+        <div class="section-eyebrow">Projects</div>
+        <h2 class="section-heading">Built, shipped & running</h2>
+        <p class="section-sub">Production systems I've designed and delivered end-to-end.</p>
+
+        <div class="project-list">
+            <div class="project">
+                <div class="project-stripe" style="background: var(--accent);"></div>
+                <div class="project-content">
+                    <div class="project-meta">
+                        <h3 class="project-name">Infrastructure Automation Platform</h3>
+                        <p class="project-desc">
+                            Self-service platform for engineering teams to provision cloud infrastructure
+                            through a clean UI. Reduced provisioning time from days to minutes with
+                            automated compliance checks.
+                        </p>
+                        <div class="project-tags">
+                            <span class="ptag">React</span>
+                            <span class="ptag">Go</span>
+                            <span class="ptag">Terraform</span>
+                            <span class="ptag">AWS</span>
+                            <span class="ptag">PostgreSQL</span>
+                        </div>
+                    </div>
+                    <div class="project-links-col">
+                        <a href="#" class="project-link">Demo →</a>
+                        <a href="#" class="project-link">Code →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project">
+                <div class="project-stripe" style="background: var(--green);"></div>
+                <div class="project-content">
+                    <div class="project-meta">
+                        <h3 class="project-name">Real-Time Incident Dashboard</h3>
+                        <p class="project-desc">
+                            Centralized observability dashboard aggregating logs, metrics, and traces.
+                            Features live alerting, on-call routing, and post-incident timeline reconstruction.
+                        </p>
+                        <div class="project-tags">
+                            <span class="ptag">Next.js</span>
+                            <span class="ptag">TypeScript</span>
+                            <span class="ptag">Grafana</span>
+                            <span class="ptag">Prometheus</span>
+                            <span class="ptag">Redis</span>
+                        </div>
+                    </div>
+                    <div class="project-links-col">
+                        <a href="#" class="project-link">Demo →</a>
+                        <a href="#" class="project-link">Code →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project">
+                <div class="project-stripe" style="background: var(--orange);"></div>
+                <div class="project-content">
+                    <div class="project-meta">
+                        <h3 class="project-name">E-Commerce Microservices</h3>
+                        <p class="project-desc">
+                            Rebuilt a monolithic storefront into event-driven microservices.
+                            Handled 50K concurrent users with auto-scaling, circuit breakers,
+                            and distributed tracing across 12 services.
+                        </p>
+                        <div class="project-tags">
+                            <span class="ptag">Node.js</span>
+                            <span class="ptag">Python</span>
+                            <span class="ptag">Kubernetes</span>
+                            <span class="ptag">Kafka</span>
+                            <span class="ptag">MongoDB</span>
+                        </div>
+                    </div>
+                    <div class="project-links-col">
+                        <a href="#" class="project-link">Case Study →</a>
+                        <a href="#" class="project-link">Code →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project">
+                <div class="project-stripe" style="background: var(--rose);"></div>
+                <div class="project-content">
+                    <div class="project-meta">
+                        <h3 class="project-name">GitOps Deployment Engine</h3>
+                        <p class="project-desc">
+                            Internal CLI and web tool for zero-downtime deployments via GitOps.
+                            Canary releases, automated rollbacks, and full audit trail for
+                            every production change.
+                        </p>
+                        <div class="project-tags">
+                            <span class="ptag">Go</span>
+                            <span class="ptag">ArgoCD</span>
+                            <span class="ptag">Helm</span>
+                            <span class="ptag">GitHub Actions</span>
+                            <span class="ptag">Docker</span>
+                        </div>
+                    </div>
+                    <div class="project-links-col">
+                        <a href="#" class="project-link">Demo →</a>
+                        <a href="#" class="project-link">Code →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SKILLS — BENTO GRID -->
+<section id="skills">
+    <div class="container">
+        <div class="section-eyebrow">Skills</div>
+        <h2 class="section-heading">Tools of the trade</h2>
+        <p class="section-sub">Everything I use across the stack and the pipeline.</p>
+
+        <div class="bento">
+            <div class="bento-cell wide">
+                <div class="bento-icon" style="background: var(--accent-light); color: var(--accent);">⚛</div>
+                <div class="bento-title">Frontend</div>
+                <div class="bento-items">
+                    <span class="bento-tag">React</span>
+                    <span class="bento-tag">Next.js</span>
+                    <span class="bento-tag">TypeScript</span>
+                    <span class="bento-tag">Tailwind CSS</span>
+                    <span class="bento-tag">Vue.js</span>
+                    <span class="bento-tag">Redux</span>
+                    <span class="bento-tag">Webpack</span>
+                </div>
+            </div>
+            <div class="bento-cell wide">
+                <div class="bento-icon" style="background: var(--green-light); color: #16A34A;">⚙</div>
+                <div class="bento-title">Backend</div>
+                <div class="bento-items">
+                    <span class="bento-tag">Node.js</span>
+                    <span class="bento-tag">Python</span>
+                    <span class="bento-tag">Go</span>
+                    <span class="bento-tag">Express</span>
+                    <span class="bento-tag">FastAPI</span>
+                    <span class="bento-tag">GraphQL</span>
+                    <span class="bento-tag">REST</span>
+                </div>
+            </div>
+            <div class="bento-cell wide">
+                <div class="bento-icon" style="background: #FFFBEB; color: #D97706;">☁</div>
+                <div class="bento-title">DevOps & Cloud</div>
+                <div class="bento-items">
+                    <span class="bento-tag">AWS</span>
+                    <span class="bento-tag">Docker</span>
+                    <span class="bento-tag">Kubernetes</span>
+                    <span class="bento-tag">Terraform</span>
+                    <span class="bento-tag">Jenkins</span>
+                    <span class="bento-tag">GitHub Actions</span>
+                    <span class="bento-tag">ArgoCD</span>
+                    <span class="bento-tag">Helm</span>
+                    <span class="bento-tag">Ansible</span>
+                </div>
+            </div>
+            <div class="bento-cell wide">
+                <div class="bento-icon" style="background: #FFF1F2; color: #E11D48;">🗄</div>
+                <div class="bento-title">Data & Monitoring</div>
+                <div class="bento-items">
+                    <span class="bento-tag">PostgreSQL</span>
+                    <span class="bento-tag">MongoDB</span>
+                    <span class="bento-tag">Redis</span>
+                    <span class="bento-tag">Kafka</span>
+                    <span class="bento-tag">Elasticsearch</span>
+                    <span class="bento-tag">Prometheus</span>
+                    <span class="bento-tag">Grafana</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+    <div class="container">
+        <div class="section-eyebrow">Experience</div>
+        <h2 class="section-heading">Where I've built things</h2>
+        <p class="section-sub">Production experience across startups and enterprise.</p>
+
+        <div class="exp-grid">
+            <div class="exp-item">
+                <div class="exp-date">2022 — Present</div>
+                <div>
+                    <div class="exp-role">Senior Full Stack Engineer</div>
+                    <div class="exp-company">TechCorp Inc.</div>
+                    <p class="exp-desc">
+                        Leading the migration from monolith to microservices. Built internal
+                        developer platform that cut deployment time by 80%. Managing
+                        Kubernetes clusters across three regions.
+                    </p>
+                </div>
+            </div>
+            <div class="exp-item">
+                <div class="exp-date">2020 — 2022</div>
+                <div>
+                    <div class="exp-role">DevOps Engineer</div>
+                    <div class="exp-company">CloudScale Solutions</div>
+                    <p class="exp-desc">
+                        Designed infrastructure-as-code pipelines with Terraform.
+                        Implemented observability stack (Prometheus + Grafana + ELK)
+                        serving 200+ engineers. Maintained 99.95% uptime SLA.
+                    </p>
+                </div>
+            </div>
+            <div class="exp-item">
+                <div class="exp-date">2018 — 2020</div>
+                <div>
+                    <div class="exp-role">Full Stack Developer</div>
+                    <div class="exp-company">StartupHub</div>
+                    <p class="exp-desc">
+                        Built and shipped the product from zero to 100K users.
+                        Owned the full stack: React frontend, Node.js APIs,
+                        PostgreSQL, and Docker-based CI/CD.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="about-section">
+    <div class="container">
+        <div class="section-eyebrow">About</div>
+        <h2 class="section-heading">The person behind the terminal</h2>
+
+        <div class="about-layout">
+            <div class="about-prose">
+                <p>
+                    I'm a software engineer who cares equally about what users see
+                    and what keeps the lights on behind the scenes. I find the most
+                    satisfying work at the intersection of development and operations —
+                    building features, then making sure they ship reliably and scale cleanly.
+                </p>
+                <p>
+                    I believe in automation over toil, infrastructure as code over
+                    click-ops, and shipping small changes fast over big-bang releases.
+                    I write code that other engineers enjoy maintaining.
+                </p>
+                <p>
+                    Outside of work, I contribute to open-source projects,
+                    write about DevOps practices on my blog, and explore
+                    the outdoors whenever screens get tiring.
+                </p>
+            </div>
+            <div class="about-facts">
+                <div class="fact-card">
+                    <div class="fact-label">Location</div>
+                    <div class="fact-value">India</div>
+                </div>
+                <div class="fact-card">
+                    <div class="fact-label">Experience</div>
+                    <div class="fact-value">5+ Years</div>
+                </div>
+                <div class="fact-card">
+                    <div class="fact-label">Education</div>
+                    <div class="fact-value">B.Tech CS</div>
+                </div>
+                <div class="fact-card">
+                    <div class="fact-label">Availability</div>
+                    <div class="fact-value" style="color: var(--green);">Open to Work</div>
+                </div>
+                <div class="fact-card">
+                    <div class="fact-label">Preferred</div>
+                    <div class="fact-value">Remote / Hybrid</div>
+                </div>
+                <div class="fact-card">
+                    <div class="fact-label">Languages</div>
+                    <div class="fact-value">English, Hindi</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <div class="container">
+        <div class="section-eyebrow">Contact</div>
+        <h2 class="section-heading">Let's build something</h2>
+        <p class="section-sub">Interested in working together? Reach out through any of these.</p>
+
+        <div class="contact-row">
+            <a href="mailto:you@example.com" class="contact-pill">
+                <div class="contact-pill-icon">✉</div>
+                <div>
+                    <div class="contact-pill-label">Email</div>
+                    <div class="contact-pill-value">you@example.com</div>
+                </div>
+            </a>
+            <a href="#" class="contact-pill">
+                <div class="contact-pill-icon">💼</div>
+                <div>
+                    <div class="contact-pill-label">LinkedIn</div>
+                    <div class="contact-pill-value">linkedin.com/in/yourname</div>
+                </div>
+            </a>
+            <a href="#" class="contact-pill">
+                <div class="contact-pill-icon">🐙</div>
+                <div>
+                    <div class="contact-pill-label">GitHub</div>
+                    <div class="contact-pill-value">github.com/yourname</div>
+                </div>
+            </a>
+            <a href="#" class="contact-pill">
+                <div class="contact-pill-icon">📄</div>
+                <div>
+                    <div class="contact-pill-label">Resume</div>
+                    <div class="contact-pill-value">Download PDF</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>Designed & built by Your Name · Deployed on GitHub Pages · © 2026</p>
+</footer>
+
+</body>
+</html>
