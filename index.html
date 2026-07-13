@@ -69,10 +69,6 @@
             background: var(--surface); color: var(--text);
             box-shadow: var(--shadow-sm);
         }
-        .topbar-status {
-            display: flex; align-items: center; gap: 0.5rem;
-            font-size: 0.8rem; font-weight: 500; color: var(--green);
-        }
         .pulse {
             width: 8px; height: 8px; border-radius: 50%;
             background: var(--green);
@@ -161,15 +157,6 @@
             font-size: 0.75rem; font-weight: 500;
             color: var(--text-muted); text-transform: uppercase;
             letter-spacing: 0.08em;
-        }
-        .status-badge {
-            display: flex; align-items: center; gap: 0.4rem;
-            font-size: 0.75rem; font-weight: 600; color: var(--green);
-            background: var(--green-light);
-            padding: 0.25rem 0.7rem; border-radius: 20px;
-        }
-        .status-badge .dot {
-            width: 6px; height: 6px; border-radius: 50%; background: var(--green);
         }
         .status-body { padding: 1.5rem; }
         .status-row {
@@ -333,37 +320,6 @@
             line-height: 1.75; max-width: 540px;
         }
 
-        /* ── ABOUT ── */
-        .about-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-        .about-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 5rem; align-items: start;
-        }
-        .about-prose p {
-            font-size: 1rem; color: var(--text-secondary);
-            line-height: 1.85; margin-bottom: 1.25rem;
-        }
-        .about-facts {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-        .fact-card {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.25rem;
-        }
-        .fact-label {
-            font-size: 0.72rem; color: var(--text-muted);
-            text-transform: uppercase; letter-spacing: 0.08em;
-            font-weight: 500; margin-bottom: 0.35rem;
-        }
-        .fact-value {
-            font-family: 'Sora', sans-serif;
-            font-size: 0.95rem; font-weight: 600;
-        }
-
         /* ── CONTACT ── */
         .contact-row {
             display: flex; gap: 1rem; flex-wrap: wrap;
@@ -434,13 +390,8 @@
             <li><a href="#projects">Projects</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#experience">Experience</a></li>
-            <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
-        <div class="topbar-status">
-            <span class="pulse"></span>
-            Open to work
-        </div>
     </div>
 </div>
 
@@ -448,19 +399,19 @@
 <section class="hero">
     <div class="hero-inner">
         <div class="hero-left">
-            <div class="hero-greeting">This is my website</div>
+            <div class="hero-greeting">Hey! 😊</div>
             <h1>
-                I craft apps<br>
-                and the <em>infra<br>beneath them.</em>
+                I engineer systems<br>
+                that <em>ship, scale<br>& never sleep.</em>
             </h1>
             <p class="hero-bio">
-                Full Stack Developer and DevOps Engineer who builds end-to-end —
-                from the UI your users see to the pipelines and clusters that
-                keep it all running at scale.
+                Software Engineer with 4 years of building enterprise-grade microservices, 
+                data-driven dashboards, and the CI/CD pipelines that push it all to 
+                production — reliably, every time.
             </p>
             <div class="hero-actions">
-                <a href="#projects" class="btn btn-fill">See my work ↓</a>
-                <a href="#contact" class="btn btn-ghost">Say hello</a>
+                <a href="#projects" class="btn btn-fill">Projects ↓</a>
+                <a href="#contact" class="btn btn-ghost">Init Conversation..</a>
             </div>
         </div>
 
@@ -468,36 +419,35 @@
         <div class="status-card">
             <div class="status-header">
                 <span class="status-header-title">System Status</span>
-                <span class="status-badge"><span class="dot"></span> All Operational</span>
             </div>
             <div class="status-body">
                 <div class="status-row">
                     <span class="status-label">Role</span>
-                    <span class="status-value">Full Stack + DevOps</span>
+                    <span class="status-value">Software Engineer II</span>
                 </div>
                 <div class="status-row">
                     <span class="status-label">Experience</span>
-                    <span class="status-value">5+ years</span>
+                    <span class="status-value">4 years</span>
                 </div>
                 <div class="status-row">
                     <span class="status-label">Location</span>
-                    <span class="status-value">India 🇮🇳</span>
-                </div>
-                <div class="status-row">
-                    <span class="status-label">Availability</span>
-                    <span class="status-value" style="color: var(--green);">Open to offers</span>
+                    <span class="status-value">Gurugram, HR, India 🇮🇳</span>
                 </div>
                 <div class="status-row" style="border-bottom: none;">
                     <span class="status-label">Current Stack</span>
                 </div>
                 <div class="status-tech-row">
-                    <span class="mini-tag indigo">React</span>
-                    <span class="mini-tag indigo">Node.js</span>
+                    <span class="mini-tag indigo">Java</span>
+                    <span class="mini-tag indigo">Python</span>
+                    <span class="mini-tag indigo">Angular</span>
+                    <span class="mini-tag indigo">TypeScript</span>
                     <span class="mini-tag green">Docker</span>
                     <span class="mini-tag green">K8s</span>
-                    <span class="mini-tag amber">AWS</span>
-                    <span class="mini-tag amber">Terraform</span>
-                    <span class="mini-tag rose">Python</span>
+                    <span class="mini-tag green">Helm</span>
+                    <span class="mini-tag amber">SpringBoot</span>
+                    <span class="mini-tag amber">Jenkins</span>
+                    <span class="mini-tag rose">Github</span>
+                    <span class="mini-tag rose">PostgreSQL</span>
                 </div>
             </div>
         </div>
@@ -516,17 +466,18 @@
                 <div class="project-stripe" style="background: var(--accent);"></div>
                 <div class="project-content">
                     <div class="project-meta">
-                        <h3 class="project-name">Infrastructure Automation Platform</h3>
+                        <h3 class="project-name">Enterprise Microservices Platform Description</h3>
                         <p class="project-desc">
-                            Self-service platform for engineering teams to provision cloud infrastructure
-                            through a clean UI. Reduced provisioning time from days to minutes with
-                            automated compliance checks.
+                            Architected and delivered a suite of RESTful microservices powering
+                            Dell's enterprise operations — designing reusable backend service
+                            templates in Java and Spring Boot that accelerated feature delivery
+                            across engineering teams by 35%.
                         </p>
                         <div class="project-tags">
-                            <span class="ptag">React</span>
-                            <span class="ptag">Go</span>
-                            <span class="ptag">Terraform</span>
-                            <span class="ptag">AWS</span>
+                            <span class="ptag">Java</span>
+                            <span class="ptag">Spring Boot</span>
+                            <span class="ptag">Rest APIs</span>
+                            <span class="ptag">Microservices</span>
                             <span class="ptag">PostgreSQL</span>
                         </div>
                     </div>
@@ -541,17 +492,18 @@
                 <div class="project-stripe" style="background: var(--green);"></div>
                 <div class="project-content">
                     <div class="project-meta">
-                        <h3 class="project-name">Real-Time Incident Dashboard</h3>
+                        <h3 class="project-name">Operations Analytics Dashboard Description</h3>
                         <p class="project-desc">
-                            Centralized observability dashboard aggregating logs, metrics, and traces.
-                            Features live alerting, on-call routing, and post-incident timeline reconstruction.
+                            Engineered a data-driven dashboard with TypeScript and Angular that
+                            replaced 60% of manual reporting workflows — giving operations teams
+                            real-time visibility into system health, performance metrics, and
+                            business KPIs through clean, interactive interfaces.
                         </p>
                         <div class="project-tags">
-                            <span class="ptag">Next.js</span>
+                            <span class="ptag">Angular</span>
                             <span class="ptag">TypeScript</span>
-                            <span class="ptag">Grafana</span>
-                            <span class="ptag">Prometheus</span>
-                            <span class="ptag">Redis</span>
+                            <span class="ptag">Rest APIs</span>
+                            <span class="ptag">UX</span>
                         </div>
                     </div>
                     <div class="project-links-col">
@@ -565,18 +517,18 @@
                 <div class="project-stripe" style="background: var(--orange);"></div>
                 <div class="project-content">
                     <div class="project-meta">
-                        <h3 class="project-name">E-Commerce Microservices</h3>
+                        <h3 class="project-name">CI/CD Pipeline Architecture Description</h3>
                         <p class="project-desc">
-                            Rebuilt a monolithic storefront into event-driven microservices.
-                            Handled 50K concurrent users with auto-scaling, circuit breakers,
-                            and distributed tracing across 12 services.
+                            Redesigned the entire CI/CD pipeline across multiple microservices
+                            using Jenkins, Docker, and Helm — cutting deployment errors,
+                            enabling consistent multi-environment rollouts across dev, staging,
+                            and production with a single push.
                         </p>
                         <div class="project-tags">
-                            <span class="ptag">Node.js</span>
-                            <span class="ptag">Python</span>
-                            <span class="ptag">Kubernetes</span>
-                            <span class="ptag">Kafka</span>
-                            <span class="ptag">MongoDB</span>
+                            <span class="ptag">Jenkins</span>
+                            <span class="ptag">Docker</span>
+                            <span class="ptag">Helm</span>
+                            <span class="ptag">Github</span>
                         </div>
                     </div>
                     <div class="project-links-col">
@@ -590,18 +542,19 @@
                 <div class="project-stripe" style="background: var(--rose);"></div>
                 <div class="project-content">
                     <div class="project-meta">
-                        <h3 class="project-name">GitOps Deployment Engine</h3>
+                        <h3 class="project-name">Kubernetes Deployment Engine Description</h3>
                         <p class="project-desc">
-                            Internal CLI and web tool for zero-downtime deployments via GitOps.
-                            Canary releases, automated rollbacks, and full audit trail for
-                            every production change.
+                            Built Kubernetes deployment workflows with Helm charts that
+                            standardized multi-environment rollouts — eliminating configuration
+                            drift between dev, staging, and production and slashing deployment
+                            failures to near zero.
                         </p>
                         <div class="project-tags">
-                            <span class="ptag">Go</span>
-                            <span class="ptag">ArgoCD</span>
-                            <span class="ptag">Helm</span>
-                            <span class="ptag">GitHub Actions</span>
+                            <span class="ptag">Kubernetes</span>
+                            <span class="ptag">Helm Charts</span>
+                            <span class="ptag">CI/CD</span>
                             <span class="ptag">Docker</span>
+                            <span class="ptag">DevOps</span>
                         </div>
                     </div>
                     <div class="project-links-col">
@@ -626,12 +579,9 @@
                 <div class="bento-icon" style="background: var(--accent-light); color: var(--accent);">⚛</div>
                 <div class="bento-title">Frontend</div>
                 <div class="bento-items">
-                    <span class="bento-tag">React</span>
-                    <span class="bento-tag">Next.js</span>
+                    <span class="bento-tag">Angular</span>
                     <span class="bento-tag">TypeScript</span>
-                    <span class="bento-tag">Tailwind CSS</span>
-                    <span class="bento-tag">Vue.js</span>
-                    <span class="bento-tag">Redux</span>
+                    <span class="bento-tag">HTML/CSS</span>
                     <span class="bento-tag">Webpack</span>
                 </div>
             </div>
@@ -639,28 +589,21 @@
                 <div class="bento-icon" style="background: var(--green-light); color: #16A34A;">⚙</div>
                 <div class="bento-title">Backend</div>
                 <div class="bento-items">
-                    <span class="bento-tag">Node.js</span>
+                    <span class="bento-tag">Java</span>
                     <span class="bento-tag">Python</span>
-                    <span class="bento-tag">Go</span>
-                    <span class="bento-tag">Express</span>
-                    <span class="bento-tag">FastAPI</span>
-                    <span class="bento-tag">GraphQL</span>
-                    <span class="bento-tag">REST</span>
+                    <span class="bento-tag">SpringBoot</span>
+                    <span class="bento-tag">RESTful APIs</span>
                 </div>
             </div>
             <div class="bento-cell wide">
                 <div class="bento-icon" style="background: #FFFBEB; color: #D97706;">☁</div>
                 <div class="bento-title">DevOps & Cloud</div>
                 <div class="bento-items">
-                    <span class="bento-tag">AWS</span>
                     <span class="bento-tag">Docker</span>
                     <span class="bento-tag">Kubernetes</span>
-                    <span class="bento-tag">Terraform</span>
                     <span class="bento-tag">Jenkins</span>
-                    <span class="bento-tag">GitHub Actions</span>
-                    <span class="bento-tag">ArgoCD</span>
+                    <span class="bento-tag">GitHub</span>
                     <span class="bento-tag">Helm</span>
-                    <span class="bento-tag">Ansible</span>
                 </div>
             </div>
             <div class="bento-cell wide">
@@ -668,12 +611,7 @@
                 <div class="bento-title">Data & Monitoring</div>
                 <div class="bento-items">
                     <span class="bento-tag">PostgreSQL</span>
-                    <span class="bento-tag">MongoDB</span>
-                    <span class="bento-tag">Redis</span>
-                    <span class="bento-tag">Kafka</span>
-                    <span class="bento-tag">Elasticsearch</span>
-                    <span class="bento-tag">Prometheus</span>
-                    <span class="bento-tag">Grafana</span>
+                    <span class="bento-tag">Agile/Scrum</span>
                 </div>
             </div>
         </div>
@@ -689,94 +627,40 @@
 
         <div class="exp-grid">
             <div class="exp-item">
-                <div class="exp-date">2022 — Present</div>
+                <div class="exp-date">Aug 2022 — Present</div>
                 <div>
-                    <div class="exp-role">Senior Full Stack Engineer</div>
-                    <div class="exp-company">TechCorp Inc.</div>
+                    <div class="exp-role">Software Engineer II</div>
+                    <div class="exp-company">Dell Technologies</div>
                     <p class="exp-desc">
-                        Leading the migration from monolith to microservices. Built internal
-                        developer platform that cut deployment time by 80%. Managing
-                        Kubernetes clusters across three regions.
+                        Architecting and shipping enterprise-grade microservices that power Dell's operations platform. 
+                        Designed reusable backend templates in Java and Spring Boot that accelerated feature delivery by 35%.
+                        Engineered data-driven dashboards in Angular that eliminated 60% of manual reporting. 
+                        Own the full lifecycle — Kubernetes deployment to production monitoring.
                     </p>
                 </div>
             </div>
             <div class="exp-item">
-                <div class="exp-date">2020 — 2022</div>
+                <div class="exp-date">Jan 2022 — Jun 2022</div>
                 <div>
-                    <div class="exp-role">DevOps Engineer</div>
-                    <div class="exp-company">CloudScale Solutions</div>
+                    <div class="exp-role">Software Engineering Intern</div>
+                    <div class="exp-company">Dell Technologies</div>
                     <p class="exp-desc">
-                        Designed infrastructure-as-code pipelines with Terraform.
-                        Implemented observability stack (Prometheus + Grafana + ELK)
-                        serving 200+ engineers. Maintained 99.95% uptime SLA.
+                        Built a KairosDB proof-of-concept for high-throughput time-series data storage. 
+                        Automated Maven and Jenkins build pipelines and implemented GitHub PR validation 
+                        with automated quality checks — laying the groundwork for the team's CI/CD practices.
                     </p>
                 </div>
             </div>
             <div class="exp-item">
-                <div class="exp-date">2018 — 2020</div>
+                <div class="exp-date">Jun 2018 — July 2018</div>
                 <div>
-                    <div class="exp-role">Full Stack Developer</div>
-                    <div class="exp-company">StartupHub</div>
+                    <div class="exp-role">Data Engineering Intern</div>
+                    <div class="exp-company">ONGC (Oil and Natural Gas Corporation)</div>
                     <p class="exp-desc">
-                        Built and shipped the product from zero to 100K users.
-                        Owned the full stack: React frontend, Node.js APIs,
-                        PostgreSQL, and Docker-based CI/CD.
+                        Developed a Python-based ML model for drilling performance analytics that 
+                        automated data processing pipelines and cut manual analysis effort by 40%
+                         — turning raw operational data into actionable insights.
                     </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about" class="about-section">
-    <div class="container">
-        <div class="section-eyebrow">About</div>
-        <h2 class="section-heading">The person behind the terminal</h2>
-
-        <div class="about-layout">
-            <div class="about-prose">
-                <p>
-                    I'm a software engineer who cares equally about what users see
-                    and what keeps the lights on behind the scenes. I find the most
-                    satisfying work at the intersection of development and operations —
-                    building features, then making sure they ship reliably and scale cleanly.
-                </p>
-                <p>
-                    I believe in automation over toil, infrastructure as code over
-                    click-ops, and shipping small changes fast over big-bang releases.
-                    I write code that other engineers enjoy maintaining.
-                </p>
-                <p>
-                    Outside of work, I contribute to open-source projects,
-                    write about DevOps practices on my blog, and explore
-                    the outdoors whenever screens get tiring.
-                </p>
-            </div>
-            <div class="about-facts">
-                <div class="fact-card">
-                    <div class="fact-label">Location</div>
-                    <div class="fact-value">India</div>
-                </div>
-                <div class="fact-card">
-                    <div class="fact-label">Experience</div>
-                    <div class="fact-value">5+ Years</div>
-                </div>
-                <div class="fact-card">
-                    <div class="fact-label">Education</div>
-                    <div class="fact-value">B.Tech CS</div>
-                </div>
-                <div class="fact-card">
-                    <div class="fact-label">Availability</div>
-                    <div class="fact-value" style="color: var(--green);">Open to Work</div>
-                </div>
-                <div class="fact-card">
-                    <div class="fact-label">Preferred</div>
-                    <div class="fact-value">Remote / Hybrid</div>
-                </div>
-                <div class="fact-card">
-                    <div class="fact-label">Languages</div>
-                    <div class="fact-value">English, Hindi</div>
                 </div>
             </div>
         </div>
@@ -795,21 +679,21 @@
                 <div class="contact-pill-icon">✉</div>
                 <div>
                     <div class="contact-pill-label">Email</div>
-                    <div class="contact-pill-value">you@example.com</div>
+                    <div class="contact-pill-value">akriti.riya@gmail.com</div>
                 </div>
             </a>
             <a href="#" class="contact-pill">
                 <div class="contact-pill-icon">💼</div>
                 <div>
                     <div class="contact-pill-label">LinkedIn</div>
-                    <div class="contact-pill-value">linkedin.com/in/yourname</div>
+                    <div class="contact-pill-value">linkedin.com/in/akriti-agrawal-0a618a186/</div>
                 </div>
             </a>
             <a href="#" class="contact-pill">
                 <div class="contact-pill-icon">🐙</div>
                 <div>
                     <div class="contact-pill-label">GitHub</div>
-                    <div class="contact-pill-value">github.com/yourname</div>
+                    <div class="contact-pill-value">github.com/akritiAgrawal27</div>
                 </div>
             </a>
             <a href="#" class="contact-pill">
@@ -824,7 +708,7 @@
 </section>
 
 <footer>
-    <p>Designed & built by Your Name · Deployed on GitHub Pages · © 2026</p>
+    <p>Designed & built by Akriti Agrawal · Deployed on GitHub Pages · © 2026</p>
 </footer>
 
 </body>
