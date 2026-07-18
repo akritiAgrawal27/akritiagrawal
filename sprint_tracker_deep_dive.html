@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team StandUp and Sprint Tracker</title>
+<style>
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: local('JetBrains Mono'), local('Menlo'), local('Monaco');
+  font-weight: 400 700;
+}
+
+:root {
+  --bg: #fafbfc;
+  --surface: #ffffff;
+  --surface-alt: #f0f3f6;
+  --text: #1a2332;
+  --text-muted: #556677;
+  --accent: #2563eb;
+  --accent-soft: #dbeafe;
+  --border: #e2e8f0;
+  --code-bg: #1e293b;
+  --code-text: #e2e8f0;
+  --success: #059669;
+  --warning: #d97706;
+  --mono: 'JetBrains Mono', 'Menlo', 'Monaco', monospace;
+  --body: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --display: Georgia, 'Times New Roman', serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1419;
+    --surface: #1a2332;
+    --surface-alt: #243042;
+    --text: #e8edf3;
+    --text-muted: #8899aa;
+    --accent: #60a5fa;
+    --accent-soft: #1e3a5f;
+    --border: #2d3d50;
+    --code-bg: #0d1520;
+    --code-text: #c8d6e5;
+  }
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+h1 {
+  font-family: var(--display);
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+  text-wrap: balance;
+}
+
+h2 {
+  font-family: var(--display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent);
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.6rem;
+  color: var(--accent);
+}
+
+p { margin-bottom: 1rem; max-width: 68ch; }
+
+a { 
+  font-size: 1rem; 
+  color: var(--accent);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+pre {
+  background: var(--code-bg);
+  color: var(--code-text);
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  padding: 1rem 1.25rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 1rem 0;
+  line-height: 1.6;
+}
+
+code {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  background: var(--surface-alt);
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+ul, ol {
+  margin: 0.75rem 0 1rem 1.5rem;
+}
+
+li { margin-bottom: 0.4rem; }
+
+.layer-diagram {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 1.5rem 0;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+}
+
+.layer {
+  padding: 0.8rem 1.25rem;
+  text-align: center;
+  border: 1px solid var(--border);
+  font-weight: 600;
+}
+
+.layer:first-child { border-radius: 8px 8px 0 0; }
+.layer:last-child { border-radius: 0 0 8px 8px; }
+
+.layer-frontend { background: #dbeafe; color: #1e40af; }
+.layer-api { background: #dcfce7; color: #166534; }
+.layer-service { background: #fef3c7; color: #92400e; }
+.layer-repo { background: #fce7f3; color: #9d174d; }
+.layer-db { background: #e0e7ff; color: #3730a3; }
+
+@media (prefers-color-scheme: dark) {
+  .layer-frontend { background: #1e3a5f; color: #93c5fd; }
+  .layer-api { background: #14532d; color: #86efac; }
+  .layer-service { background: #451a03; color: #fcd34d; }
+  .layer-repo { background: #500724; color: #f9a8d4; }
+  .layer-db { background: #312e81; color: #a5b4fc; }
+}
+
+.arrow-down {
+  text-align: center;
+  padding: 0.3rem;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+}
+
+@media print {
+  body { font-size: 11pt; }
+  .container { max-width: 100%; padding: 1rem; }
+  pre { font-size: 9pt; white-space: pre-wrap; word-break: break-all; }
+  h2 { page-break-before: always; }
+  h2:first-of-type { page-break-before: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Team Standup & Sprint Tracker</h1>
+<p class="subtitle">Project High-Level Design and code templates</p>
+
+<div class="badge-row">
+  <span class="tag">Spring Boot 3.3</span>
+  <span class="tag">Angular 18</span>
+  <span class="tag">PostgreSQL 16</span>
+  <span class="tag">JWT Auth</span>
+  <span class="tag">Flyway</span>
+  <span class="tag">Caffeine Cache</span>
+  <span class="tag">Angular Material</span>
+  <span class="tag">Chart.js</span>
+</div>
+
+<!-- ========== SECTION 1 ========== -->
+<h2 id="overview">Project Overview</h2>
+
+<p>This is a full-stack agile project management tool that enables engineering teams 
+  to run daily standups, manage sprint backlogs, and track velocity over time. 
+  It replaces scattered Slack messages and spreadsheets with a purpose-built board.</p>
+
+<!-- ========== SECTION 2 ========== -->
+<h2 id="hld">High-Level Design (HLD)</h2>
+
+<h3>System Architecture Layers</h3>
+
+<div class="layer-diagram">
+  <div class="layer layer-frontend">Angular 18 SPA (localhost:4200)</div>
+  <div class="arrow-down">↕ HTTP + Bearer Token</div>
+  <div class="layer layer-api">Spring Boot REST Controllers (localhost:8080)</div>
+  <div class="arrow-down">↓</div>
+  <div class="layer layer-service">Service Layer (Business Logic + Caching)</div>
+  <div class="arrow-down">↓</div>
+  <div class="layer layer-repo">Spring Data JPA Repositories</div>
+  <div class="arrow-down">↓</div>
+  <div class="layer layer-db">PostgreSQL 16 (Docker)</div>
+</div>
+
+<!-- ========== SECTION 3 ========== -->
+<h2 id="backend">Backend Architecture (Spring Boot)</h2>
+
+<h3>Package Structure</h3>
+<pre><code>com.sprinttracker/
+├── SprintTrackerApplication.java     // @SpringBootApplication entry point
+├── controller/
+│   ├── AuthController.java           // POST /api/auth/register, /login
+│   ├── TeamController.java           // CRUD for teams + members
+│   ├── SprintController.java         // CRUD for sprints + velocity
+│   ├── TaskController.java           // CRUD for tasks
+│   └── StandupController.java        // Post standup, board view
+├── service/
+│   ├── AuthService.java              // Register/login, BCrypt, JWT generation
+│   ├── TeamService.java              // Team CRUD + role-based access control
+│   ├── SprintService.java            // Sprint lifecycle + @Cacheable velocity
+│   ├── TaskService.java              // Task CRUD + cache eviction trigger
+│   ├── StandupService.java           // Upsert standup entry
+│   └── BlockerDetectionService.java  // Keyword-based blocker flagging
+├── entity/                           // JPA @Entity classes
+├── repository/                       // Spring Data JPA interfaces
+├── dto/                              // Request/Response records
+├── security/                         // JWT filter, config, UserDetails
+├── config/                           // CacheNames constants
+└── common/                           // GlobalExceptionHandler, custom exceptions</code></pre>
+
+<!-- ========== SECTION 4 ========== -->
+<h2 id="frontend">Frontend Architecture (Angular)</h2>
+
+<h3>Package Structure</h3>
+<pre><code>src/app/
+├── components/
+│   ├── login/
+│   │   ├── login.component.ts
+│   ├── register/ 
+│   │   ├── register.component.ts
+│   ├── sprint-detail/
+│   │   └── sprint-detail.component.ts
+│   ├── sprint-list/
+│   │   └── sprint-list.component.ts
+│   ├── standup-board/
+│   │   └── standup-board.component.ts
+│   ├── team-list/
+│   │   └── team-list.component.ts
+│   └── velocity-chart/
+│       └── velocity-chart.component.ts
+├── core/
+│   ├── auth             // Register/login, JWT token
+│   ├── models
+│       └── sprint.model.ts
+│       └── standup.model.ts
+│       └── task.model.ts
+│       └── team.model.ts
+│       └── user.model.ts
+│       └── velocity.model.ts
+├── services/
+│   ├── auth.service.ts
+│   ├── sprint.service.ts
+│   ├── standup.service.ts
+│   ├── team.service.ts</code></pre>
+
+<!-- ========== SECTION 5 ========== -->
+<h2 id="db">Database Schema Design</h2>
+
+<h3>Entity Relationship</h3>
+<pre><code>users (1) ──────┬──── (N) team_members (N) ────┬──── (1) teams
+                │                                │
+                │                                ├──── (N) sprints
+                │                                │            │
+                │                                │     (1) ───┼──── (N) tasks
+                │                                │            │
+                └── (N) standup_entries ──────────┴────────────┘
+                        (unique: user + sprint + date)</code></pre>
+
+<!-- ========== SECTION 1 ========== -->
+<h2 id="template">Code Template</h2>
+
+<a href="https://github.com/akritiAgrawal27/team_standup_and_sprint_tracker_svc">Backend-Java</a><br>
+<a href="https://github.com/akritiAgrawal27/team_standup_and_sprint_tracker_plugin">Frontend-TypeScript</a>
+
+</div>
+</body>
+</html>

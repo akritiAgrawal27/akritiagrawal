@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Standup and Sprint Tracker Demo</title>
+<style>
+:root {
+  --bg: #f8f9fb;
+  --surface: #ffffff;
+  --text: #1b2536;
+  --text-muted: #64748b;
+  --accent: #3f51b5;
+  --accent-light: #e8eaf6;
+  --border: #e2e8f0;
+  --success: #16a34a;
+  --danger: #dc2626;
+  --warning: #d97706;
+  --blocked-bg: #dc2626;
+  --done-bg: #16a34a;
+  --progress-bg: #2563eb;
+  --todo-bg: #94a3b8;
+  --mono: 'Menlo', 'Monaco', 'Consolas', monospace;
+  --body: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --toolbar-bg: #3f51b5;
+  --toolbar-text: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0c1220;
+    --surface: #162032;
+    --text: #e2e8f0;
+    --text-muted: #8899aa;
+    --accent: #7986cb;
+    --accent-light: #1a2744;
+    --border: #2a3a50;
+    --toolbar-bg: #283593;
+  }
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--body); background: var(--bg); color: var(--text); line-height: 1.6; }
+
+.container { max-width: 820px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+
+h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.3rem; text-wrap: balance; }
+.subtitle { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 2.5rem; }
+
+.step {
+  margin-bottom: 3rem;
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+.step-num {
+  flex-shrink: 0;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-top: 0.2rem;
+}
+.step-body { flex: 1; min-width: 0; }
+.step-title { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.3rem; }
+.step-desc { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1rem; }
+.step-concepts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+.concept-tag {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  padding: 0.2em 0.55em;
+  border-radius: 4px;
+  background: var(--accent-light);
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.mock-browser {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.mock-toolbar {
+  background: var(--toolbar-bg);
+  color: var(--toolbar-text);
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.mock-toolbar-right { font-size: 0.8rem; display: flex; gap: 12px; align-items: center; }
+.mock-toolbar-right span { opacity: 0.85; }
+.mock-content { padding: 20px; }
+
+.mock-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.mock-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; }
+
+.mock-field {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  color: var(--text);
+  background: var(--surface);
+  margin-bottom: 10px;
+  width: 100%;
+}
+.mock-field.placeholder { color: var(--text-muted); }
+.mock-field.filled { color: var(--text); font-weight: 500; }
+.mock-btn {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-top: 4px;
+}
+.mock-btn.disabled { opacity: 0.4; }
+
+.mock-task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+.mock-task:last-child { border-bottom: none; }
+.mock-task-title { font-weight: 500; }
+.mock-task-pts { color: var(--text-muted); font-size: 0.78rem; margin-left: 6px; }
+.status-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 4px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.status-done { background: var(--done-bg); }
+.status-progress { background: var(--progress-bg); }
+.status-todo { background: var(--todo-bg); }
+.status-blocked { background: var(--blocked-bg); }
+
+.mock-standup-entry {
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+.mock-standup-entry .name { font-weight: 600; font-size: 0.9rem; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+.mock-standup-entry .field-label { font-weight: 600; font-size: 0.78rem; color: var(--text-muted); }
+.mock-standup-entry .field-value { font-size: 0.82rem; margin-bottom: 6px; }
+
+.mock-chart-area {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 180px;
+  padding: 0 40px 30px 40px;
+  position: relative;
+}
+.mock-chart-area::after {
+  content: 'Sprint 14';
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.chart-bar-group {
+  display: flex;
+  gap: 4px;
+  align-items: flex-end;
+  flex: 1;
+  justify-content: center;
+}
+.chart-bar {
+  width: 60px;
+  border-radius: 3px 3px 0 0;
+  position: relative;
+}
+.chart-bar.planned { background: #90a4ae; }
+.chart-bar.completed { background: var(--accent); }
+.chart-bar .bar-label {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.chart-legend {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 12px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.legend-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+.chart-y-axis {
+  position: absolute;
+  left: 10px;
+  top: 0;
+  bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.mock-tabs {
+  display: flex;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 16px;
+}
+.mock-tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: default;
+}
+.mock-tab.active {
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+  margin-bottom: -2px;
+  font-weight: 600;
+}
+
+.narration {
+  background: var(--accent-light);
+  border-left: 3px solid var(--accent);
+  padding: 10px 14px;
+  margin-top: 12px;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.82rem;
+  color: var(--text);
+}
+.narration strong { font-weight: 600; }
+
+.mock-snackbar {
+  background: #323232;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  display: inline-flex;
+  gap: 16px;
+  align-items: center;
+  margin-top: 12px;
+}
+.mock-snackbar .dismiss { color: #ff4081; font-weight: 600; }
+
+@media (max-width: 640px) {
+  .step { flex-direction: column; gap: 0.75rem; }
+  .step-num { width: 2rem; height: 2rem; font-size: 0.85rem; }
+}
+
+@media print {
+  body { font-size: 11pt; }
+  .container { max-width: 100%; padding: 1rem; }
+  .step { page-break-inside: avoid; }
+  .mock-browser { box-shadow: none; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Team Standup and Sprint Tracker</h1>
+<p class="subtitle">A visual walkthrough of every feature.</p>
+
+<!-- ============ STEP 1 ============ -->
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">
+    <div class="step-title">Register a New Account</div>
+    <div class="step-desc">User visits the app and creates an account. The backend hashes the password with BCrypt, stores the user, generates a JWT, and returns it to the frontend.</div>
+    <div class="step-concepts">
+      <span class="concept-tag">BCrypt</span>
+      <span class="concept-tag">JWT Generation</span>
+      <span class="concept-tag">Reactive Forms</span>
+      <span class="concept-tag">localStorage</span>
+    </div>
+    <div class="mock-browser">
+      <div class="mock-toolbar">
+        <span>Sprint Tracker</span>
+        <div class="mock-toolbar-right">
+          <span>Login</span>
+          <span>Register</span>
+        </div>
+      </div>
+      <div class="mock-content">
+        <div class="mock-card" style="max-width: 420px; margin: 0 auto;">
+          <h3>Create your account</h3>
+          <div class="mock-field filled">Akriti Agrawal</div>
+          <div class="mock-field filled">akriti@gmail.com</div>
+          <div class="mock-field filled">*********</div>
+          <div class="mock-btn">Create Account</div>
+        </div>
+      </div>
+    </div>
+    <div class="narration">
+      <strong>What happens behind the scenes:</strong> POST /api/auth/register &rarr; AuthService hashes password via BCrypt &rarr; saves User entity via JPA &rarr; JwtService generates a signed HS512 token with userId claim &rarr; returns {token, user} &rarr; Angular stores both in localStorage and redirects to /teams.
+    </div>
+  </div>
+</div>
+
+<!-- ============ STEP 2 ============ -->
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">
+    <div class="step-title">Teams Dashboard</div>
+    <div class="step-desc">After login, the user lands on the Teams page. The navbar shows the logged-in user's name. The auth guard protects this route &mdash; unauthenticated users are redirected to /login.</div>
+    <div class="step-concepts">
+      <span class="concept-tag">Route Guard</span>
+      <span class="concept-tag">HTTP Interceptor</span>
+      <span class="concept-tag">BehaviorSubject</span>
+    </div>
+    <div class="mock-browser">
+      <div class="mock-toolbar">
+        <span>Sprint Tracker</span>
+        <div class="mock-toolbar-right">
+          <span style="font-weight: 700;">Akriti Agrawal</span>
+          <span>Logout</span>
+        </div>
+      </div>
+      <div class="mock-content">
+        <div class="mock-card">
+          <h3>Your Teams</h3>
+          <p style="color: var(--text-muted); font-size: 0.82rem;">You're not on any teams yet. Create one below to get started.</p>
+        </div>
+        <div class="mock-card">
+          <h3>Create a Team</h3>
+          <div class="mock-field placeholder">Team name*</div>
+          <div class="mock-btn disabled">+ Create Team</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ STEP 3 ============ -->
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body">
+    <div class="step-title">Create a Team</div>
+    <div class="step-desc">The user creates "Backend Squad". The creator is automatically added as ADMIN in a single @Transactional operation. A snackbar confirms success.</div>
+    <div class="step-concepts">
+      <span class="concept-tag">@Transactional</span>
+      <span class="concept-tag">Composite PK</span>
+      <span class="concept-tag">Role-based Access</span>
+      <span class="concept-tag">MatSnackBar</span>
+    </div>
+    <div class="mock-browser">
+      <div class="mock-toolbar">
+        <span>Sprint Tracker</span>
+        <div class="mock-toolbar-right">
+          <span style="font-weight: 700;">Akriti Agrawal</span>
+          <span>Logout</span>
+        </div>
+      </div>
+      <div class="mock-content">
+        <div class="mock-card">
+          <h3>Your Teams</h3>
+          <div style="padding: 8px 0; font-size: 0.88rem;">
+            <strong>Backend Squad</strong><br>
+            <span style="color: var(--text-muted); font-size: 0.78rem;">Role: ADMIN</span>
+          </div>
+        </div>
+        <div class="mock-snackbar">Team "Backend Squad" created <span class="dismiss">Dismiss</span></div>
+      </div>
+    </div>
+    <div class="narration">
+      <strong>Spring concept:</strong> TeamService.createTeam() saves Team + TeamMember in one @Transactional method. If either fails, both roll back. The TeamMember uses a composite primary key (TeamMemberId with teamId + userId).
+    </div>
+  </div>
+</div>
+
+<!-- ============ STEP 4 ============ -->
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-body">
+    <div class="step-title">Create a Sprint</div>
+    <div class="step-desc">Inside the team, create "Sprint 14" with a goal, start date, and end date. Status begins as PLANNED. Flyway created the sprints table schema via a versioned migration file.</div>
+    <div class="step-concepts">
+      <span class="concept-tag">Flyway Migration</span>
+      <span class="concept-tag">ddl-auto: validate</span>
+      <span class="concept-tag">@CacheEvict</span>
+      <span class="concept-tag">Lazy Loading</span>
+    </div>
+    <div class="mock-browser">
+      <div class="mock-toolbar">
+        <span>Sprint Tracker</span>
+        <div class="mock-toolbar-right">
+          <span style="font-weight: 700;">Akriti Agrawal</span>
+          <span>Logout</span>
+        </div>
+      </div>
+      <div class="mock-content">
+        <div class="mock-card">
+          <h3>Sprints</h3>
+          <div style="padding: 8px 0; font-size: 0.88rem;">
+            <strong>Sprint 14</strong><br>
+            <span style="color: var(--text-muted); font-size: 0.78rem;">2026-07-14 &rarr; 2026-07-25 &middot; PLANNED</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ STEP 5 ============ -->
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-body">
+    <div class="step-title">Add Tasks with Story Points</div>
+    <div class="step-desc">Add backlog items to the sprint. Each task has a title, story points, and status. Mark some as DONE to simulate sprint progress. Changing task status triggers velocity cache eviction.</div>
+    <div class="step-concepts">
+      <span class="concept-tag">Builder Pattern</span>
+      <span class="concept-tag">@CacheEvict</span>
+      <span class="concept-tag">Enum Status</span>
+      <span class="concept-tag">completedAt Timestamp</span>
+    </div>
+    <div class="mock-browser">
+      <div class="mock-toolbar">
+        <span>Sprint Tracker</span>
+        <div class="mock-toolbar-right">
+          <span style="font-weight: 700;">Akriti Agrawal</span>
+          <span>Logout</span>
+        </div>
+      </div>
+      <div class="mock-content">
+        <div class="mock-tabs">
+          <div class="mock-tab active">Tasks</div>
+          <div class="mock-tab">Standup Board</div>
+          <div class="mock-tab">Velocity</div>
+        </div>
+        <div class="mock-card">
+          <h3>Add Task</h3>
+          <div class="mock-field placeholder">Title*</div>
+          <div class="mock-field filled" style="width: 120px;">1</div>
+          <div class="mock-btn disabled">Add Task</div>
+        </div>
+        <div style="margin-top: 16px;">
+          <div class="mock-task">
+            <div><span class="mock-task-title">Implement JWT Auth API</span><span class="mock-task-pts">5 pts</span></div>
+            <span class="status-badge status-done">DONE</span>
+          </div>
+          <div class="mock-task">
+            <div><span class="mock-task-title">Database Migration Scripts</span><span class="mock-task-pts">3 pts</span></div>
+            <span class="status-badge status-done">DONE</span>
+          </div>
+          <div class="mock-task">
+            <div><span class="mock-task-title">Write Unit Tests</span><span class="mock-task-pts">2 pts</span></div>
+            <span class="status-badge status-progress">IN_PROGRESS</span>
+          </div>
+          <div class="mock-task">
+            <div><span class="mock-task-title">API Documentation</span><span class="mock-task-pts">2 pts</span></div>
+            <span class="status-badge status-todo">TODO</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="narration">
+      <strong>Cache invalidation:</strong> Every call to TaskService.createTask() or updateStatus() calls sprintService.evictVelocity(teamId), which uses @CacheEvict to bust the Caffeine cache for that team's velocity data. Next velocity read recomputes from DB.
+    </div>
+  </div>
+</div>
+
+<!-- ============ STEP 6 ============ -->
+<div class="step">
+  <div class="step-num">6</div>
+  <div class="step-body">
+    <div class="step-title">Post Standup &mdash; Blocker Auto-Detected</div>
+    <div class="step-desc">Post a daily standup update. The entry reads "I am blocked on API access from DevOps team" &mdash; the BlockerDetectionService scans the text, finds the keyword "blocked", and flags the entry with a red BLOCKED badge. No explicit blocker field needed.</div>
+    <div class="step-concepts">
+      <span class="concept-tag">BlockerDetectionService</span>
+      <span class="concept-tag">Upsert Pattern</span>
+      <span class="concept-tag">RxJS Polling</span>
+      <span class="concept-tag">Single Responsibility</span>
+    </div>
+    <div class="mock-browser">
+      <div class="mock-toolbar">
+        <span>Sprint Tracker</span>
+        <div class="mock-toolbar-right">
+          <span style="font-weight: 700;">Akriti Agrawal</span>
+          <span>Logout</span>
+        </div>
+      </div>
+      <div class="mock-content">
+        <div class="mock-tabs">
+          <div class="mock-tab">Tasks</div>
+          <div class="mock-tab active">Standup Board</div>
+          <div class="mock-tab">Velocity</div>
+        </div>
+        <div class="mock-card">
+          <h3>Post Today's Update</h3>
+          <div class="mock-field filled">Completed JWT auth API and DB migration scripts</div>
+          <div class="mock-field filled">Working on unit tests but I am blocked on API access from DevOps team</div>
+          <div class="mock-field placeholder">Blockers (optional)</div>
+          <div class="mock-btn">Post Update</div>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin: 16px 0 8px;">
+          <strong style="font-size: 0.88rem;">Today's Board</strong>
+          <span style="color: var(--text-muted); font-size: 0.75rem;">auto-refreshes every 15s</span>
+        </div>
+        <div class="mock-standup-entry">
+          <div class="name">
+            Akriti Agrawal
+            <span class="status-badge status-blocked">BLOCKED</span>
+          </div>
+          <div class="field-label">Yesterday:</div>
+          <div class="field-value">Completed JWT auth API and DB migration scripts</div>
+          <div class="field-label">Today:</div>
+          <div class="field-value">Working on unit tests but I am <strong style="color: var(--danger);">blocked</strong> on API access from DevOps team</div>
+        </div>
+      </div>
+    </div>
+    <div class="narration">
+      <strong>How blocker detection works:</strong> BlockerDetectionService.isBlocked() first checks if blockersText is non-empty. If not, it lowercases yesterday + today text and scans for 16 keyword phrases ("blocked", "stuck", "waiting on", "need help", etc.). The "blocked" in "I am blocked on API access" triggers the flag. This is computed on write and stored as a boolean &mdash; no re-scanning on reads.
+    </div>
+  </div>
+</div>
+
+<!-- ============ STEP 7 ============ -->
+<div class="step">
+  <div class="step-num">7</div>
+  <div class="step-body">
+    <div class="step-title">Velocity Chart &mdash; Planned vs Completed</div>
+    <div class="step-desc">The Velocity tab shows a bar chart comparing planned story points (total across all tasks) vs completed points (tasks marked DONE) per sprint. This data is served from Caffeine cache.</div>
+    <div class="step-concepts">
+      <span class="concept-tag">@Cacheable</span>
+      <span class="concept-tag">Caffeine</span>
+      <span class="concept-tag">Chart.js / ng2-charts</span>
+      <span class="concept-tag">Custom JPA Query</span>
+    </div>
+    <div class="mock-browser">
+      <div class="mock-toolbar">
+        <span>Sprint Tracker</span>
+        <div class="mock-toolbar-right">
+          <span style="font-weight: 700;">Akriti Agrawal</span>
+          <span>Logout</span>
+        </div>
+      </div>
+      <div class="mock-content">
+        <div class="mock-tabs">
+          <div class="mock-tab">Tasks</div>
+          <div class="mock-tab">Standup Board</div>
+          <div class="mock-tab active">Velocity</div>
+        </div>
+        <div class="mock-card">
+          <h3>Sprint Velocity</h3>
+          <p style="color: var(--text-muted); font-size: 0.78rem; margin-bottom: 12px;">Planned vs. completed story points per sprint</p>
+          <div class="chart-legend">
+            <span><span class="legend-dot" style="background: #90a4ae;"></span> Planned</span>
+            <span><span class="legend-dot" style="background: var(--accent);"></span> Completed</span>
+          </div>
+          <div class="mock-chart-area" style="position: relative;">
+            <div class="chart-y-axis">
+              <span>12</span>
+              <span>10</span>
+              <span>8</span>
+              <span>6</span>
+              <span>4</span>
+              <span>2</span>
+              <span>0</span>
+            </div>
+            <div class="chart-bar-group">
+              <div class="chart-bar planned" style="height: 150px;">
+                <span class="bar-label">12 pts</span>
+              </div>
+              <div class="chart-bar completed" style="height: 100px;">
+                <span class="bar-label">8 pts</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="narration">
+      <strong>Caching in action:</strong> The first request to GET /api/teams/{id}/velocity computes the aggregate from DB (sumPlannedPoints + sumCompletedPoints per sprint). The result is cached in Caffeine with key=teamId. Subsequent requests return instantly from cache until a task is created or updated, which triggers @CacheEvict. The 60s TTL is a safety net.
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>
